@@ -10,15 +10,15 @@ SDL_Texture *tile[ALL];
    Doit etre avec le meme ordre que l'enum dans le .h 
 */
 const char *tilenames[]={
-  "data/ambulance.bmp",	
-  "data/minitruck.bmp",
-  "data/taxi.bmp",
-  "data/sport.bmp",
-  "data/minivan.bmp",
-  "data/truck.bmp",
-  "data/car.bmp",
-  "data/police.bmp",
-  "data/viper.bmp"
+  "/home/vincent/ClionProjects/commute/data/ambulance.bmp",
+  "/home/vincent/ClionProjects/commute/data/minitruck.bmp",
+  "/home/vincent/ClionProjects/commute/data/taxi.bmp",
+  "/home/vincent/ClionProjects/commute/data/sport.bmp",
+  "/home/vincent/ClionProjects/commute/data/minivan.bmp",
+  "/home/vincent/ClionProjects/commute/data/truck.bmp",
+  "/home/vincent/ClionProjects/commute/data/car.bmp",
+  "/home/vincent/ClionProjects/commute/data/police.bmp",
+  "/home/vincent/ClionProjects/commute/data/viper.bmp"
 };
 /* Lit un pixel d'une carte. A utiliser dans loadMap.
    Retourne la couleur RGB du pixel aux coordonnées x,y.
@@ -66,10 +66,19 @@ void loadTiles(SDL_Renderer *s) {
    A REMPLIR
 */
 Map *loadMap(char *filename) {
-  /*
   SDL_Surface *s=SDL_LoadBMP(filename);
-  */
-  Map *m=NULL;
+
+  Map *m = (Map *) malloc(sizeof(Map));
+  //Car *car = (Car *) malloc(sizeof(Car));
+  //car->orientation = 0.0f;
+  m->hauteur = 600;
+  m->largeur = 800;
+  m->car.orientation = 0.0;
+  m->car.pos.x = 40;
+  m->car.pos.y = 40;
+  m->car.type = VIPER;
+  m->car.vitesse = 5;
+  m->surface = s;
   return m;
 }
 
@@ -97,6 +106,12 @@ void paint(SDL_Renderer *r,Map *m) {
   /* Fait un ecran noir */
   SDL_SetRenderDrawColor(r, 0, 0, 0, 255 );
   SDL_RenderClear(r);
+  SDL_Rect rect;
+  rect.h = 64;
+  rect.w = 64;
+  rect.x = m->car.pos.x;
+  rect.y = m->car.pos.y;
+	SDL_RenderCopyEx(r, tile[m->car.type], NULL, &rect, m->car.orientation, NULL, SDL_FLIP_NONE);
   /* Definir ici le contenu graphique de la fenetre.
    */
 

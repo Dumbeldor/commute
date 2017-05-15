@@ -5,6 +5,7 @@ include_directories(
 set(SOURCE_FILES commute.c engine.c graphics.c timer.c)
 set(SDL2_INCLUDE_DIR /usr/include/SDL2)
 set(SDL2_LIBRARY /usr/lib/libSDL2.so)
+set(LIBRARY m sndfile)
 
 if (ENABLE_UNITTESTS)
     message("-- Unittests enabled")
@@ -20,6 +21,7 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 target_link_libraries(${PROJECT_NAME} ${PROJECT_LIBS})
 target_link_libraries (${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})
+target_link_libraries(${PROJECT_NAME} ${LIBRARY})
 
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})

@@ -12,8 +12,8 @@ typedef enum {
 } TypeCar;
 
 typedef struct {
-	int x;
-	int y;
+	float x;
+	float y;
 } Position;
 
 typedef struct {
@@ -24,8 +24,10 @@ typedef struct {
 } Car;
 
 typedef struct {
+	SDL_Surface *surface;
 	int largeur;
 	int hauteur;
+	Car car;
 } Map;
 #define SIZE 64
 
