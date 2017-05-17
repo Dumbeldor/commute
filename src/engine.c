@@ -24,10 +24,10 @@ int getEvent(Map *m) {
 				case SDLK_UP:
 					break;
 				case SDLK_LEFT:
-					m->car.orientation = m->car.orientation - m->car.vitesse;
+					m->car.orientation = m->car.orientation - m->car.braquage;
 					break;
 				case SDLK_RIGHT:
-					m->car.orientation = m->car.orientation + m->car.vitesse;
+					m->car.orientation = m->car.orientation + m->car.braquage;
 					if (m->car.orientation > 360) {
 						m->car.orientation = m->car.orientation - 360;
 					}
@@ -41,17 +41,27 @@ int getEvent(Map *m) {
 
 /* A COMPLETER */
 void update(Map *m) {
+	deplacerCar(m, &m->car);
+
+	// Déplacer les voitures
+	for (int i = 0; i < m->nbCars; i++) {
+		deplacerCar(m, &m->cars[i]);
+	}
+
+}
+
+void deplacerCar(Map *m, Car *car) {
 	double val;
 	val = PI / 180.0;
-	float x = m->car.pos.x + m->car.vitesse * cos(val * m->car.orientation);
-	float y = m->car.pos.y + m->car.vitesse * sin(val * m->car.orientation);
+	float x = car->rect.x + car->vitesse * cos(val * car->orientation);
+	float y = car->rect.y + car->vitesse * sin(val * car->orientation);
 
 
 	if (x > m->largeur - 64 || x < 0)
-		x = m->car.pos.x;
+		x = car->rect.x;
 	if (y > m->hauteur - 64  || y < 0)
-		y = m->car.pos.y;
+		y = car->rect.y;
 
-	m->car.pos.x = x;
-	m->car.pos.y = y;
+	car->rect.x = x;
+	car->rect.y = y;
 }

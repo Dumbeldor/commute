@@ -4,14 +4,14 @@
 #include "engine.h"
 #include "graphics.h"
 #include "timer.h"
-#define MAP "data/map.bmp"
+#define MAP "/home/vincent/ClionProjects/commute/data/map0.bmp"
 
 int main(int argc,char *argv[]) {
   Map *m;
   int finished=0;
   m=loadMap(MAP);
-  SDL_Renderer *r = openWindow(800,600); /* A changer ! */
-  loadTiles(r);
+  SDL_Renderer *r = openWindow(m->largeur,m->hauteur); /* A changer ! */
+  loadTiles(r, m);
   timerInit();
   while (!finished) {
     finished=getEvent(m);
